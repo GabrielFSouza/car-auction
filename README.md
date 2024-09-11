@@ -19,7 +19,7 @@ Avaliação.
 * GitHub Actions
 * Typescript
 
-## :rocket: Rodando o projeto
+## :rocket: Instalando ferramentas e clonando o projeto.
 Para rodar o projeto é necessário executar os seguintes passos:
 ```
 
@@ -37,9 +37,16 @@ Clone o repositório
 > pnpm i
 ```
 
-## Ajustar o ambiente do sistema
+## Rodando o projeto
+```
+> docker-compose up -d --verbose
 
-Variáveis de Ambiente no .env.example: 
+Neste passo é importante verificar o mongo subindo ao container. Execute o comando a seguir para iniciar a aplicação.
+
+>  pnpm run dev
+```
+
+## Caso tenha dúvidas para ajustar o ambiente do sistema, leia abaixo:
 
 Variáveis Preenchidas:
 
@@ -65,7 +72,7 @@ Separação por Quebras de Linha: Cada variável deve estar em uma linha separad
 Valores Padrão: Se você não tiver um valor específico, pode usar valores padrão como placeholders. Lembre-se de substituir por valores reais antes de produção.
 Segurança: Não inclua informações sensíveis diretamente no arquivo .env se for compartilhar o código. Utilize variáveis de ambiente configuradas no ambiente de produção ou serviços de gerenciamento de segredos.
 
-## :handshake: Colaboradores
+## :handshake: Colaborador
 <table>
   <tr>
     <td align="center">
