@@ -26,21 +26,44 @@ Para rodar o projeto é necessário executar os seguintes passos:
 Instalar o NodeJS: https://nodejs.org/pt
 Instalar o Docker: https://www.docker.com/products/docker-desktop/
 
-
-
-Configure o banco de dados no appsettings.json
-"DefaultConnection": "Host=localhost;Database=yourdatabase;Username=youruser;Password=yourpassword"
-
-Verifique a pasta Migrations e exclua o arquivo ..._InitialCreate.cs e o AppDbContextModelSnapshot.cs
-
-Abra o Console do Gerenciador de Pacotes e execute os seguintes comandos:
-> dotnet ef migrations add InitialCreate
-> dotnet ef database update
-
-Sugestão: Deixei um pasta com nome de ArquivoJSON com um arquivo **estudande.json**, para assim que
-executar o projeto no swagger ir no estudante e executar o POST.
+Clone o repositório
+> git clone https://github.com/GabrielFSouza/car-auction.git
+> cd car-auction
 
 ```
+
+## :Instalar as dependências
+```
+> pnpm i
+```
+
+## :Ajustar o ambiente do sistema
+
+Variáveis de Ambiente no .env.example: 
+
+Variáveis Preenchidas:
+
+Ambiente (NODE_ENV ou similar): Define o ambiente em que a aplicação está rodando, como development, production, ou test.
+Porta (PORT ou similar): A porta na qual a aplicação irá escutar. Por exemplo, 3000 para aplicações web.
+Host (HOST ou similar): O endereço do servidor ou localhost onde a aplicação está rodando.
+Collections do MongoDB (MONGO_DB_NAME, MONGO_COLLECTIONS, etc.): Nome do banco de dados e coleções no MongoDB que a aplicação irá utilizar.
+Variáveis a Serem Preenchidas:
+
+Credenciais de Banco de Dados:
+MONGO_URI: URL de conexão com o MongoDB, incluindo o nome do banco de dados e credenciais, se necessário. Exemplo: mongodb://username:password@host:port/database.
+Segurança e Autenticação:
+JWT_SECRET: Segredo para assinar tokens JWT.
+SESSION_SECRET: Segredo para gerenciar sessões.
+Configurações Específicas:
+API_KEY: Para integrar com serviços externos, se aplicável.
+EMAIL_SERVICE_KEY: Se sua aplicação enviar e-mails, pode precisar de uma chave para o serviço de e-mail.
+
+Regras para Imagem Docker:
+
+Formato das Variáveis: As variáveis devem ser definidas no formato KEY=value no arquivo .env. Exemplo: PORT=3000.
+Separação por Quebras de Linha: Cada variável deve estar em uma linha separada.
+Valores Padrão: Se você não tiver um valor específico, pode usar valores padrão como placeholders. Lembre-se de substituir por valores reais antes de produção.
+Segurança: Não inclua informações sensíveis diretamente no arquivo .env se for compartilhar o código. Utilize variáveis de ambiente configuradas no ambiente de produção ou serviços de gerenciamento de segredos.
 
 ## :handshake: Colaboradores
 <table>
