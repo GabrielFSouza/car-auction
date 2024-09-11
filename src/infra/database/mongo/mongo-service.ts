@@ -24,7 +24,7 @@ export class MongoService {
     this.databaseInstance = this.client.db(DATABASE_DB)
 
     Promise.resolve(this.connect()).then(() => {
-      console.log('Connected to mongo')
+      console.log('Connected to mongo on URI: ' + URI)
     })
   }
 
