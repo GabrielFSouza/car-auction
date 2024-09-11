@@ -5,8 +5,7 @@ Este projeto implementa uma API para gerenciar uma plataforma de leilão de carr
 
 ## :books: Funcionalidades
 * <b>Funcionalidades</b>: API com endpoints para realizar operações CRUD
-(Create, Read, Update, Delete) para os recursos de Curso, Estudante e
-Avaliação.
+(Create, Read, Update, Delete) para os recursos Leilão, Carros e Usuarios.
 
 ## :wrench: Tecnologias utilizadas
 * Docker Compose
