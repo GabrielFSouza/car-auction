@@ -1,0 +1,390 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Car Auction API",
+    "description": "API para realizar operações de leilão de veículos.",
+    "version": "1.0.0",
+    "contact": {
+      "email": "gabrielferreirajobs@outlook.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001",
+      "description": "Ambiente de desenvolvimento"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Registra um novo usuário",
+        "description": "Registra um novo usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Gabriel F Souza",
+                  "email": "gabrielferreira@gmail.com",
+                  "password": "123456"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "409": {
+            "description": "User already exists"
+          }
+        }
+      }
+    },
+    "/sessions": {
+      "post": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Autentica usuário",
+        "description": "Autentica usuário",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email": "gabrielferreira@gmail.com",
+                  "password": "123456"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Credentials not valid"
+          }
+        }
+      }
+    },
+    "/cars": {
+      "post": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Registra um novo carro",
+        "description": "Registra um novo carro",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/RequestCar"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "409": {
+            "description": "Car already exists"
+          }
+        }
+      }
+    },
+    "/cars/bid/{licensePlate}": {
+      "post": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Registra um novo lance",
+        "description": "Registra um novo lance",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "licensePlate",
+            "in": "path",
+            "description": "Car license plate",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "userEmail": {
+                  "type": "string"
+                },
+                "bid": {
+                  "type": "number"
+                }
+              },
+              "example": {
+                "userEmail": "gabrielferreira@gmail.com",
+                "bid": 100000
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "409": {
+            "description": "Auction already finished"
+          }
+        }
+      }
+    },
+    "/cars/car-auction/{licensePlate}": {
+      "get": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Busca o carro no leilão com os lances",
+        "description": "Busca o carro no leilão com os lances",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "licensePlate",
+            "in": "path",
+            "description": "Car license plate",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/definitions/ResponseCar"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        }
+      }
+    },
+    "/cars/close-auction/{licensePlate}": {
+      "patch": {
+        "tags": [
+          "Cars"
+        ],
+        "summary": "Encerra o leilão e retorna o carro com o vencedor do leilão",
+        "description": "Encerra o leilão e retorna o carro com o vencedor do leilão",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "licensePlate",
+            "in": "path",
+            "description": "Car license plate",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/definitions/CloseAuctionResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "RequestCar": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "licensePlate": {
+          "type": "string"
+        },
+        "specifications": {
+          "type": "string"
+        },
+        "year": {
+          "type": "number"
+        },
+        "brand": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "initialBid": {
+          "type": "number"
+        }
+      }
+    },
+    "ResponseCar": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "licensePlate": {
+          "type": "string"
+        },
+        "specifications": {
+          "type": "string"
+        },
+        "year": {
+          "type": "number"
+        },
+        "brand": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "initialBid": {
+          "type": "number"
+        },
+        "isAuctionFinished": {
+          "type": "boolean"
+        },
+        "bids": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "userEmail": {
+                "type": "string"
+              },
+              "bid": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    },
+    "CloseAuctionResponse": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "licensePlate": {
+          "type": "string"
+        },
+        "specifications": {
+          "type": "string"
+        },
+        "year": {
+          "type": "number"
+        },
+        "brand": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "initialBid": {
+          "type": "number"
+        },
+        "auctionWinner": {
+          "type": "string"
+        },
+        "auctionWinnerBid": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
