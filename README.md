@@ -32,12 +32,12 @@ Clone o repositório
 
 ```
 
-## :Instalar as dependências
+## Instalar as dependências
 ```
 > pnpm i
 ```
 
-## :Ajustar o ambiente do sistema
+## Ajustar o ambiente do sistema
 
 Variáveis de Ambiente no .env.example: 
 
